@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { EmployeeService } from '../employee.service';
 export class DeleteEmployeeComponent implements OnInit {
   empID: any;
   isActive: any = true;
+  public onClose: Subject<any> = new Subject()
   constructor(
     private modalService: BsModalRef,
     private employeeService: EmployeeService,
@@ -24,6 +26,7 @@ export class DeleteEmployeeComponent implements OnInit {
       this.employeeService.deleteEmployee(this.empID[index]).subscribe((res: any)=>{
         this.isActive = true;
         this.toastrService.success('Employee Deleted Success')
+        this.onClose.next('apply')
         this.closeModal();
       }, err =>{
         this.isActive = true;

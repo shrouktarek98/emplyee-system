@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
 import { EmployeeService } from '../employee.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class EditEmployeeComponent implements OnInit {
   empID: any = null;
   isActive: any = true;
   editEmployeeForm!:FormGroup;
+  public onClose: Subject<any> = new Subject()
   constructor(
     private modalService: BsModalRef,
     private formBuilder:FormBuilder,
@@ -34,7 +36,7 @@ export class EditEmployeeComponent implements OnInit {
     this.isActive = false;
     this.employeeService.editEmployee(this.editEmployeeForm.value).subscribe((res: any) => {
       this.isActive = true;
-      
+      this.onClose.next('apply')
       this.toastrService.success('Employee Edit Success')
       this.closeModal();
     }, err => {

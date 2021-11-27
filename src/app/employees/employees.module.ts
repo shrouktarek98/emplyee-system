@@ -13,6 +13,7 @@ import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
+import { NgxUiLoaderHttpModule, NgxUiLoaderModule } from 'ngx-ui-loader';
 
 
 @NgModule({
@@ -30,6 +31,8 @@ import { DeleteEmployeeComponent } from './delete-employee/delete-employee.compo
     ReactiveFormsModule,
     NgxPaginationModule,
     MatSortModule,
+    NgxUiLoaderModule, 
+    NgxUiLoaderHttpModule,
   ]
 })
 export class EmployeesModule { }

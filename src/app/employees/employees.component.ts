@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
@@ -15,19 +16,21 @@ export class EmployeesComponent implements OnInit {
   employees: any = null;
   currentPage: any =1;
   modal: BsModalRef = new BsModalRef();
+  
 
 
 
-  constructor(private employeeServices: EmployeeService, private modalService: BsModalService) { }
+  constructor(private employeeServices: EmployeeService, private modalService: BsModalService,private ngxService: NgxUiLoaderService) { }
 
   ngOnInit(): void {
     this.getEmployee();
     
   }
   getEmployee(){
+    this.ngxService.startLoader("tableID");
     this.employeeServices.getEmployees().subscribe((res: any)=>{
       this.employees = res;
-      
+      this.ngxService.stopLoader("tableID");
     })
   }
   sortData(event: Sort){
@@ -61,16 +64,21 @@ export class EmployeesComponent implements OnInit {
   openModalAddEmployee() {
     this.modal = this.modalService.show(AddEmployeeComponent,
     {backdrop: true , ignoreBackdropClick: true,  });
-    this.modalService.onHide.subscribe((result: any) => {
-      this.getEmployee();
+    this.modal.content.onClose.subscribe((result: any) => {
+      if(result == 'apply'){
+        this.getEmployee();
+      }
     });
   }
   openModalEditEmployee(empID: number) {
     const initialState = { empID:empID };
     this.modal = this.modalService.show(EditEmployeeComponent,
     {backdrop: true , ignoreBackdropClick: true, initialState });
-    this.modalService.onHide.subscribe((result: any) => {
-      this.getEmployee();
+    this.modal.content.onClose.subscribe((result: any) => {
+      if(result == 'apply'){
+        this.getEmployee();
+      }
+      
     });
   }
   openModalDeleteEmployee(empID: any = null ){
@@ -87,12 +95,25 @@ export class EmployeesComponent implements OnInit {
       let initialState = {empID : employeesID}  
       this.modal = this.modalService.show(DeleteEmployeeComponent,
       {backdrop: true , ignoreBackdropClick: true, initialState });
-      this.modalService.onHide.subscribe((result: any) => {
-        this.getEmployee();
+      this.modal.content.onClose.subscribe((result: any) => {
+        if(result == 'apply'){
+          this.getEmployee();
+        }
       });
     }
      
    
+  }
+  showDelete(){
+    let employeesID = [];
+    for (let index = 0; index < this.employees.length; index++) {  
+      this.employees[index].checked ? employeesID.push(this.employees[index].empId) : null;
+    }
+    if(employeesID.length > 0) {
+      return false
+    }  else {
+      return true;
+    } 
   }
   
 }
