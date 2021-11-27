@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="table-wrapper">
+        <div class="table-title">
+            <div class="row justify-content-between">
+                <div class="col">
+                    <h2>Manage <b>Employees</b></h2>
+                </div>
+                <div class="col d-flex justify-content-end">
+                   <button  (click)="openModalDeleteEmployee()" class="btn btn-danger"><i class="fas fa-minus-circle"></i> Delete</button>
+                   <button (click)="openModalAddEmployee()" class="btn btn-success" cloc><i class="fas fa-plus-circle"></i> Add New Employee</button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="employees?.length == 0">
+            <h1 class="text-warning text-center" style="margin-top: 30px;"><small>No Employees Found.</small></h1>
+        </div>
+        <div *ngIf="employees?.length > 0">
+            <table class="table table-striped table-hover" matSort (matSortChange)="sortData($event)">
+
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" ngModel (ngModelChange)="selectEmployee($event)"></th>
+                        <th mat-sort-header="name">Name</th>
+                        <th>Email</th>
+                        <th mat-sort-header="address">Address</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody  >
+                    <tr *ngFor="let employee of employees  | paginate: { itemsPerPage: 10, currentPage: currentPage }; let i = index">
+                        <td><input type="checkbox" [(ngModel)]="employee.checked"></td>
+                        <td>{{employee.empName}}</td>
+                        <td>{{employee.empEmail}}</td>
+                        <td>{{employee.empAddress}}</td>
+                        <td>{{employee.empPhone}}</td>
+                        <td>
+                          <a class="edit" (click)="openModalEditEmployee(employee.empId)" data-toggle="modal"><i class="fas fa-pen"></i></a>
+                          <a class="delete" (click)="openModalDeleteEmployee(employee.empId)" data-toggle="modal"><i class="fas fa-trash"></i></a>
+                        </td>
+                    </tr>
+    
+                </tbody>
+            </table>
+            <div class="clearfix">
+                <div class="d-flex justify-content-between">
+                    <p>
+                        Showing
+                        <span *ngIf="employees.length - (currentPage * 10) > 0"> 10 </span>
+                        <span *ngIf="employees.length - (currentPage * 10) <= 0"> {{employees.length - ((currentPage - 1) * 10)}} </span>
+                        out of {{employees.length}} entries
+                    </p>
+                    <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+                </div>
+            </div>
+        <div>
+            
+    </div>
+</div>

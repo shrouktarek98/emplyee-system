@@ -1,0 +1,23 @@
+<div >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form role="form" >
+            <input id="delete_id" style="display:none" name="delete_id">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Employee</h4>
+                    <button type="button" class="close pull-right"  aria-label="Close" (click)="closeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete these Records?</p>
+                    <p class="text-warning"><small>This action cannot be undone.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModal()" value="Cancel">
+                    <input id="del" type="submit" class="btn btn-danger" [disabled]="!isActive"  (click)="deleteEmployee()" value="Delete">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+.modal-content{
+    border: none;
+}
+.modal-dialog{
+    margin: 0px;
+}
+::ng-deep .modal-dialog{
+    max-width: 400px;
+}
+label{
+    margin: 10px 0px;
+}
+.close{
+    border: none;
+    background: none;
+    color: #8d8d8d;
+    font-size: 16px;
+}
+.modal-footer{
+    background: #e8eef5;
+}
+.error_message_control_form{
+    font-size: 12px;
+    text-align: right;
+    color: red;
+    margin-right: 8px;
+    margin-top: 3px;
+}
+.btn-info{
+    color: #fff !important;
+}

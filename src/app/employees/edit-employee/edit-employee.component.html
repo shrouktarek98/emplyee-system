@@ -1,0 +1,53 @@
+<div >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form [formGroup]="editEmployeeForm">
+                <div class="modal-header">
+                    <h4 class="modal-title" >Edit Employee</h4>
+                    <button type="button" class="close pull-right"  aria-label="Close" (click)="closeModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input placeholder="Name" formControlName="empName" type="text" class="form-control" required name="empName">
+                  
+                        <div *ngIf="editEmployeeFormRef.empName.touched && editEmployeeFormRef.empName.invalid">
+                            <div class="error_message_control_form" *ngIf="editEmployeeFormRef.empName.errors?.required">Name Required</div>
+                            <div class="error_message_control_form" *ngIf="!editEmployeeFormRef.empName.errors?.required && editEmployeeFormRef.empName.errors?.minlength"> اقل عدد 3 حروف</div>
+                        </div>  </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input placeholder="Email" formControlName="empEmail" type="email" class="form-control" required name="empEmail">
+                        <div *ngIf="editEmployeeFormRef.empEmail.touched && editEmployeeFormRef.empEmail.invalid">
+                            <div class="error_message_control_form" *ngIf="editEmployeeFormRef.empEmail.errors?.required">Email Required</div>
+                            <div class="error_message_control_form" *ngIf="!editEmployeeFormRef.empEmail.errors?.required&&editEmployeeFormRef.empEmail.errors?.email">  Invalid Email </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea placeholder="Address" formControlName="empAddress" class="form-control" required name="empAddress"></textarea>
+                        <div *ngIf="editEmployeeFormRef.empAddress.touched && editEmployeeFormRef.empAddress.invalid">
+                            <div class="error_message_control_form" *ngIf="editEmployeeFormRef.empAddress.errors?.required">Address Required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input placeholder="Phone" formControlName="empPhone" type="text" pattern="^01[0-2]\d[0-9]{7}$" class="form-control" required name="empPhone">
+                        <div *ngIf="editEmployeeFormRef.empPhone.touched && editEmployeeFormRef.empPhone.invalid">
+                            <div class="error_message_control_form" *ngIf="editEmployeeFormRef.empPhone.errors?.required">Phone Required</div>
+                            <div class="error_message_control_form" *ngIf="!editEmployeeFormRef.empPhone.errors?.required && editEmployeeFormRef.empPhone.errors?.pattern">  Invalid Phone </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-alert alert-danger">{{$error}}</div> -->
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel"(click)="closeModal()" >
+                    <input  type="submit" class="btn btn-info" [disabled]="(editEmployeeForm.invalid || !isActive)" value="Edit"(click)="editEmployee()" >
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
